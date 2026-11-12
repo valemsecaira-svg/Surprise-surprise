@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Una petición muy seria 💌</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ffe9b8; --bg2:#ffd2a8; --ink:#1d2b4f; --soft:#4a5a80;
+  --paper:#fffaf0; --coral:#ff6b57; --teal:#12a8a0; --sun:#ffc533; --blue:#2b4fa8;
+  --env:#f4b6a0; --env-in:#e58f7a; --shadow:rgba(29,43,79,.28);
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#1c2140; --bg2:#33264a; --ink:#fff3dc; --soft:#c9cfe8;
+    --paper:#262c52; --env:#c9715f; --env-in:#a85846; --shadow:rgba(0,0,0,.5);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#1c2140; --bg2:#33264a; --ink:#fff3dc; --soft:#c9cfe8;
+  --paper:#262c52; --env:#c9715f; --env-in:#a85846; --shadow:rgba(0,0,0,.5);
+}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+html,body{margin:0;min-height:100%}
+body{
+  font-family:"Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color:var(--ink); background:linear-gradient(160deg,var(--bg),var(--bg2)) fixed;
+  min-height:100vh; display:flex; align-items:center; justify-content:center; overflow-x:hidden;
+}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+
+/* ---------- Sobre ---------- */
+#intro{display:flex;flex-direction:column;align-items:center;gap:28px;padding:24px;text-align:center;transition:opacity .5s,transform .5s}
+#intro.gone{opacity:0;transform:scale(.9);pointer-events:none;position:absolute}
+.hint{font-size:1.15rem;font-weight:600;color:var(--soft);margin:0}
+.envelope{
+  position:relative;width:min(80vw,340px);aspect-ratio:3/2;border:0;background:none;padding:0;
+  perspective:900px; animation:wiggle 2.4s ease-in-out infinite;
+}
+.envelope .back{position:absolute;inset:0;background:var(--env-in);border-radius:10px;box-shadow:0 18px 30px -8px var(--shadow)}
+.envelope .letter{
+  position:absolute;left:8%;right:8%;top:8%;height:80%;background:var(--paper);border-radius:6px;
+  transition:transform .8s ease .45s;display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:1.1rem;color:var(--coral)
+}
+.envelope .front{
+  position:absolute;inset:0;border-radius:10px;
+  background:
+    linear-gradient(to top right,transparent 49.5%,var(--env) 50%) left/50% 100% no-repeat,
+    linear-gradient(to top left,transparent 49.5%,var(--env) 50%) right/50% 100% no-repeat;
+}
+.envelope .front::after{content:"";position:absolute;left:0;right:0;bottom:0;height:62%;background:var(--env);clip-path:polygon(0 100%,100% 100%,100% 30%,50% 0,0 30%);border-radius:0 0 10px 10px;opacity:.97}
+.envelope .flap{
+  position:absolute;left:0;right:0;top:0;height:58%;background:var(--env);
+  clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top;transition:transform .6s ease;z-index:3;
+  filter:brightness(1.05)
+}
+.envelope .seal{
+  position:absolute;left:50%;top:50%;width:54px;height:54px;margin:-27px 0 0 -27px;border-radius:50%;z-index:4;
+  background:var(--coral);display:grid;place-items:center;font-size:1.6rem;box-shadow:0 4px 10px var(--shadow);transition:opacity .3s
+}
+.envelope.open{animation:none}
+.envelope.open .flap{transform:rotateX(180deg);z-index:1}
+.envelope.open .seal{opacity:0}
+.envelope.open .letter{transform:translateY(-70%)}
+@keyframes wiggle{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg) translateY(-6px)}}
+
+/* ---------- Invitación ---------- */
+#card{
+  display:none;width:min(94vw,520px);margin:24px auto;background:var(--paper);border-radius:18px;
+  box-shadow:0 24px 50px -12px var(--shadow);overflow:hidden;
+}
+#card.show{display:block;animation:rise .7s cubic-bezier(.2,.9,.3,1.1)}
+@keyframes rise{from{opacity:0;transform:translateY(60px) scale(.9)}to{opacity:1;transform:none}}
+.banner{display:flex;height:14px}
+.banner i{flex:1}
+.banner i:nth-child(1){background:var(--coral)}.banner i:nth-child(2){background:var(--sun)}
+.banner i:nth-child(3){background:var(--teal)}.banner i:nth-child(4){background:var(--blue)}
+.banner i:nth-child(5){background:var(--coral)}.banner i:nth-child(6){background:var(--sun)}
+.inner{padding:28px 26px 30px}
+h1{font-size:clamp(1.9rem,8vw,2.6rem);line-height:1.05;margin:0 0 10px;font-weight:800;letter-spacing:-.02em}
+.lead{font-size:1.08rem;line-height:1.55;color:var(--soft);margin:0 0 22px}
+.lead b{color:var(--ink)}
+.plan{list-style:none;margin:0 0 22px;padding:0;display:grid;gap:12px}
+.plan li{display:grid;grid-template-columns:92px 1fr;gap:12px;align-items:start;padding:12px;border-radius:12px;background:color-mix(in srgb,var(--sun) 18%,transparent)}
+.day{font-weight:800;border-radius:999px;text-align:center;padding:6px 8px;color:#fff;font-size:.95rem}
+.d1{background:var(--coral)}.d2{background:var(--teal)}.d3{background:var(--blue)}.d4{background:#c98a00}
+.plan p{margin:2px 0 0;line-height:1.4}
+.crew{padding:14px 16px;border-radius:12px;border:2px dashed var(--teal);line-height:1.45;margin-bottom:26px}
+.ask{font-size:1.35rem;font-weight:800;text-align:center;margin:0 0 14px}
+.btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;min-height:120px;position:relative}
+.yes{background:var(--coral);color:#fff;border:0;border-radius:999px;padding:14px 26px;font-weight:800;font-size:1.1rem;box-shadow:0 8px 0 -2px rgba(0,0,0,.18);transition:transform .15s}
+.yes:hover{transform:translateY(-2px) scale(1.04)}
+.no{background:transparent;color:var(--soft);border:2px solid var(--soft);border-radius:999px;padding:12px 20px;font-weight:600;transition:left .2s,top .2s}
+.thanks{display:none;text-align:center}
+.thanks h2{font-size:2rem;margin:0 0 6px}
+.thanks p{margin:0;color:var(--soft);font-size:1.1rem}
+.done .btns,.done .ask{display:none}.done .thanks{display:block}
+.pop{position:fixed;top:-30px;font-size:1.8rem;pointer-events:none;z-index:50;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(540deg);opacity:.9}}
+@media (prefers-reduced-motion:reduce){
+  .envelope{animation:none}
+  #card.show{animation:none}
+  .pop{display:none}
+  .envelope .letter,.envelope .flap,#intro{transition:none}
+}
+</style>
+</head>
+<body>
+
+<section id="intro">
+  <p class="hint">Te llegó algo importante. Ábrelo 👇</p>
+  <button class="envelope" id="env" aria-label="Abrir el sobre">
+    <div class="back"></div>
+    <div class="letter">Petición oficial</div>
+    <div class="front"></div>
+    <div class="flap"></div>
+    <div class="seal">💌</div>
+  </button>
+</section>
+
+<article id="card" aria-live="polite">
+  <div class="banner"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="inner" id="inner">
+    <h1>¿Me dejas ir a Tlacotalpan? 🎂</h1>
+    <p class="lead">Te quería pedir permiso para ir a Tlacotalpan <b>de viernes a lunes</b> por el cumpleaños de <b>Alim</b>. Aquí va el plan completo:</p>
+
+    <ul class="plan">
+      <li><span class="day d1">Viernes</span><p>Llegamos y nos quedamos en casa de Alim.</p></li>
+      <li><span class="day d2">Sábado</span><p>Nos vamos a la playa con su familia, que queda como a una hora. Dormimos allá.</p></li>
+      <li><span class="day d3">Domingo</span><p>Regresamos a Tlaco.</p></li>
+      <li><span class="day d4">Lunes</span><p>Es feriado, así que nos regresamos ese día. Sin faltar a nada. 😉</p></li>
+    </ul>
+
+    <p class="crew">👯 Vamos <b>todos los del grupo</b> y también la <b>familia de Alim</b>. No voy sola(o), voy con toda la banda.</p>
+
+    <p class="ask">Porfa, di que sí 🥺</p>
+    <div class="btns" id="btns">
+      <button class="yes" id="yes">¡Sí, claro que sí! 🎉</button>
+      <button class="no" id="no">Lo voy a pensar</button>
+    </div>
+
+    <div class="thanks">
+      <h2>¡Gracias, eres la mejor! 🥳</h2>
+      <p>Prometo avisar cuando lleguemos y portarme bien. Nos vemos en Tlaco 🌴🌊</p>
+    </div>
+  </div>
+</article>
+
+<script>
+(function(){
+  var env=document.getElementById('env'),intro=document.getElementById('intro'),card=document.getElementById('card');
+  var yes=document.getElementById('yes'),no=document.getElementById('no'),btns=document.getElementById('btns');
+
+  env.addEventListener('click',function(){
+    env.classList.add('open');
+    setTimeout(function(){
+      intro.classList.add('gone');
+      card.classList.add('show');
+      window.scrollTo(0,0);
+    },1300);
+  },{once:true});
+
+  /* El botón "Lo voy a pensar" se escapa */
+  var tries=0, labels=['¿Seguro? 🥺','Mejor di que sí','No te dejes 😅','Ya, acepta 💛'];
+  function dodge(e){
+    if(e){e.preventDefault();}
+    var box=btns.getBoundingClientRect(),w=no.offsetWidth,h=no.offsetHeight;
+    no.style.position='absolute';
+    no.style.left=Math.max(0,Math.random()*(box.width-w))+'px';
+    no.style.top=Math.max(0,Math.random()*(box.height-h))+'px';
+    no.textContent=labels[tries%labels.length]; tries++;
+    yes.style.transform='scale('+Math.min(1.5,1+tries*.07)+')';
+  }
+  no.addEventListener('mouseenter',dodge);
+  no.addEventListener('touchstart',dodge,{passive:false});
+  no.addEventListener('click',dodge);
+
+  yes.addEventListener('click',function(){
+    document.getElementById('inner').classList.add('done');
+    var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(reduce) return;
+    var em=['🎉','🎂','🌴','🌊','💛','✨','🏖️','🎈'];
+    for(var i=0;i<42;i++){
+      (function(i){
+        var s=document.createElement('span');
+        s.className='pop'; s.textContent=em[i%em.length];
+        s.style.left=Math.random()*100+'vw';
+        s.style.animationDuration=(2.5+Math.random()*2.5)+'s';
+        s.style.animationDelay=(Math.random()*.8)+'s';
+        document.body.appendChild(s);
+        setTimeout(function(){s.remove()},6500);
+      })(i);
+    }
+  });
+})();
+</script>
+</body>
+</html>
